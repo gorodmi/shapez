@@ -1,0 +1,20 @@
+#the mod name as displayed in-game
+displayName: "Shapez"
+
+#the internal name of your mod
+name: "shapez"
+
+#your name
+author: "gorodmi"
+
+#the fully qualified main class of the mod
+main: "shapez.Main"
+
+#the mod description as seen in the mod dialog
+description: "shapes shapes shapes shapes"
+
+#the mod version
+version: 1.0
+
+#the minimum game build required to run this mod
+minGameVersion: 139
