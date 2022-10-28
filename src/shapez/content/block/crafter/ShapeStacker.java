@@ -38,7 +38,6 @@ public class ShapeStacker extends ShapeCrafter {
         public void output() {
             if (output == null) return;
             Building a = atSide(0, 1);
-            Log.info(a);
             if (a instanceof ShapeBuild && ((ShapeBuild) a).acceptShape(this, output)) {
                 ((ShapeBuild) a).handleShape(this, output);
                 output = null;

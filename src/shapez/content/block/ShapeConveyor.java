@@ -215,7 +215,8 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
                 Seq<Building> buildings = Seq.with(back(), left(), right())
                         .filter(b -> b != null && b.isValid())
                         .removeAll(b -> b instanceof ShapeConveyorBuild && b.front() != this);
-                last = buildings.size == 0 ? null : buildings.get(0);
+                last = buildings.find(b -> b instanceof ShapeConveyorBuild);
+                if (last == null) last = buildings.size == 0 ? null : buildings.get(0);
             }
             nextc = next instanceof ShapeConveyorBuild && next.team == team ? (ShapeConveyorBuild)next : null;
             aligned = nextc != null && rotation == next.rotation;

@@ -15,7 +15,6 @@ public class ShapeExtractor extends ShapeBlock {
         @Override
         public void updateTile() {
             Floor floor = tile.overlay();
-            Log.info(floor);
             if (!(floor instanceof ShapeOre)) return;
             ShapeOre ore = (ShapeOre) floor;
             Building front = atSide(0, 0);

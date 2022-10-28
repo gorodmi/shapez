@@ -38,7 +38,6 @@ public class ColorMixer extends ShapeCrafter {
         public void output() {
             if (output == null) return;
             Building a = atSide(0, 1);
-            Log.info(a != null ? a.block : null);
             if (a instanceof ShapeBuild && ((ShapeBuild) a).acceptShape(this, output)) {
                 ((ShapeBuild) a).handleShape(this, output);
                 output = null;

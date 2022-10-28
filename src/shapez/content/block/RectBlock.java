@@ -138,8 +138,6 @@ public class RectBlock extends Block {
             tmpTiles.clear();
             proximity.clear();
 
-            Log.info("updating prox " + tile);
-
             Point2[] nearby = RectEdges.getEdges(((RectBlock) block).width, ((RectBlock) block).height);
             for(Point2 point : nearby){
                 Building other = nearby(point.x, point.y);
