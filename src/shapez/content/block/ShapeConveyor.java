@@ -1,4 +1,4 @@
-package shapez.content;
+package shapez.content.block;
 
 import arc.func.*;
 import arc.graphics.g2d.*;
@@ -19,7 +19,8 @@ import mindustry.world.*;
 import mindustry.world.blocks.*;
 import mindustry.world.blocks.distribution.*;
 import mindustry.world.meta.*;
-import shapez.ShapeItem;
+import shapez.RectEdges;
+import shapez.content.item.ShapeItem;
 
 import static mindustry.Vars.*;
 
@@ -123,7 +124,7 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
         //amount of items, always < capacity
         public int len = 0;
         //next entity
-        public @Nullable Building next;
+        public @Nullable Building next, last;
         public @Nullable ShapeConveyorBuild nextc;
         //whether the next conveyor's rotation == tile rotation
         public boolean aligned;
@@ -208,6 +209,9 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
             blending = bits[4];
 
             next = front();
+            last = back();
+            last = last == null ? left() : last;
+            last = last == null ? right() : last;
             nextc = next instanceof ShapeConveyorBuild && next.team == team ? (ShapeConveyorBuild)next : null;
             aligned = nextc != null && rotation == next.rotation;
         }
@@ -303,9 +307,7 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
         @Override
         public boolean acceptShape(ShapeBuild source, ShapeItem item){
             if(len >= capacity) return false;
-            Tile facing = Edges.getFacingEdge(source.tile, tile);
-            int direction = Math.abs(facing.relativeTo(tile.x, tile.y) - rotation);
-            return (((direction == 0) && minitem >= itemSpace) || ((direction % 2 == 1) && minitem > 0.7f)) && !(source.block.rotate && next == source);
+            return (last == source && minitem >= itemSpace && !(source.block.rotate && next == source));
         }
 
         @Override
@@ -313,7 +315,7 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
             if(len >= capacity) return;
 
             int r = rotation;
-            Tile facing = Edges.getFacingEdge(source.tile, tile);
+            Tile facing = RectEdges.getFacingEdge(source.tile, tile);
             int ang = ((facing.relativeTo(tile.x, tile.y) - r));
             float x = (ang == -1 || ang == 3) ? 1 : (ang == 1 || ang == -3) ? -1 : 0;
 
@@ -338,8 +340,10 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
             write.i(len);
 
             for(int i = 0; i < len; i++){
+                write.str(ids[i].getClass().getSimpleName());
                 write.str(ids[i].toString());
-                write.b(new byte[]{(byte)(xs[i] * 127), (byte)(ys[i] * 255 - 128), (byte)0});
+                write.f(xs[i]);
+                write.f(ys[i]);
             }
         }
 
@@ -350,12 +354,14 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
             len = Math.min(amount, capacity);
 
             for(int i = 0; i < amount; i++){
+                String type = read.str();
                 String str = read.str();
-                byte[] bytes = read.b(3);
+                float x = read.f();
+                float y = read.f();
                 if(i < capacity){
-                    ids[i] = ShapeItem.fromString(str);
-                    xs[i] = bytes[0];
-                    ys[i] = bytes[1];
+                    ids[i] = ShapeItem.fromString(type, str);
+                    xs[i] = x;
+                    ys[i] = y;
                 }
             }
 

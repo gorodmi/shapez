@@ -4,7 +4,7 @@ apply plugin: "java"
 version '1.0'
 
 targetCompatibility = 8
-sourceCompatibility = JavaVersion.VERSION_14
+sourceCompatibility = JavaVersion.VERSION_17
 
 sourceSets.main.java.srcDirs = ["src"]
 

@@ -1,28 +1,32 @@
-package shapez.content.crafter;
+package shapez.content.block.crafter;
 
+import arc.util.Log;
 import mindustry.gen.Building;
-import shapez.ShapeItem;
+import shapez.content.item.ShapeItem;
+import shapez.content.item.quad.QuadItem;
 
 public class ShapeStacker extends ShapeCrafter {
     public ShapeStacker(String name) {
         super(name);
+        width = 1;
+        height = 2;
     }
 
     public class ShapeStackerBuild extends ShapeCrafterBuild {
-        ShapeItem[] input = new ShapeItem[2];
-        ShapeItem output = null;
+        QuadItem[] input = new QuadItem[2];
+        QuadItem output = null;
 
         @Override
         public boolean acceptShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 1)) return input[0] == null;
-            else if (source == atSide(2, 0)) return input[1] == null;
+            if (source == atSide(2, 0) && item instanceof QuadItem) return input[0] == null;
+            if (source == atSide(2, 1) && item instanceof QuadItem) return input[1] == null;
             return false;
         }
 
         @Override
         public void handleShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 1)) input[0] = item;
-            else if (source == atSide(2, 0)) input[1] = item;
+            if (source == atSide(2, 0) && item instanceof QuadItem) input[0] = (QuadItem) item;
+            if (source == atSide(2, 1) && item instanceof QuadItem) input[1] = (QuadItem) item;
         }
 
         @Override
@@ -33,7 +37,8 @@ public class ShapeStacker extends ShapeCrafter {
         @Override
         public void output() {
             if (output == null) return;
-            Building a = atSide(0, 0);
+            Building a = atSide(0, 1);
+            Log.info(a);
             if (a instanceof ShapeBuild && ((ShapeBuild) a).acceptShape(this, output)) {
                 ((ShapeBuild) a).handleShape(this, output);
                 output = null;

@@ -1,24 +1,28 @@
 package shapez;
 
 import arc.*;
+import arc.graphics.Color;
 import arc.graphics.g2d.*;
 import mindustry.content.Items;
 import mindustry.mod.*;
 import mindustry.type.*;
-import shapez.content.ShapeConveyor;
-import shapez.content.crafter.ShapeStacker;
-import shapez.content.ShapeCreator;
-import shapez.content.ShapeVoid;
-import shapez.content.crafter.ShapeRotator;
-import shapez.content.crafter.ShapeSplitter;
+import shapez.content.block.RectBlock;
+import shapez.content.block.ShapeConveyor;
+import shapez.content.block.crafter.*;
+import shapez.content.block.ShapeCreator;
+import shapez.content.block.ShapeVoid;
 
 public class Main extends Mod{
+    public static final Color outline = Color.valueOf("555555");
+
     public static ShapeConveyor shapeConveyor;
     public static ShapeCreator shapeCreator;
     public static ShapeVoid shapeVoid;
     public static ShapeSplitter shapeSplitter;
     public static ShapeStacker shapeStacker;
     public static ShapeRotator shapeRotator;
+    public static ShapePainter shapePainter;
+    public static ColorMixer colorMixer;
 
     public Main() {
 
@@ -44,17 +48,22 @@ public class Main extends Mod{
         }};
 
         shapeSplitter = new ShapeSplitter("shape-splitter"){{
-            size = 2;
             requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
         }};
 
         shapeStacker = new ShapeStacker("shape-stacker"){{
-            size = 2;
-            shapeCapacity = 2;
             requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
         }};
 
         shapeRotator = new ShapeRotator("shape-rotator"){{
+            requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+        }};
+
+        shapePainter = new ShapePainter("shape-painter"){{
+            requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+        }};
+
+        colorMixer = new ColorMixer("color-mixer"){{
             requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
         }};
     }

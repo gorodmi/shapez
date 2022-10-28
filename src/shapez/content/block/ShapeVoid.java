@@ -1,6 +1,6 @@
-package shapez.content;
+package shapez.content.block;
 
-import shapez.ShapeItem;
+import shapez.content.item.ShapeItem;
 
 public class ShapeVoid extends ShapeBlock {
     public ShapeVoid(String name) {

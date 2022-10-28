@@ -1,18 +1,31 @@
-package shapez.content;
+package shapez.content.block;
 
+import arc.Core;
+import arc.graphics.g2d.Draw;
+import arc.math.Mathf;
 import arc.math.geom.Point2;
-import mindustry.gen.*;
-import mindustry.world.*;
-import shapez.ShapeItem;
+import arc.math.geom.Vec2;
+import arc.struct.Seq;
+import arc.util.Log;
+import arc.util.Reflect;
+import arc.util.Tmp;
+import mindustry.game.Team;
+import mindustry.gen.Building;
+import mindustry.world.Block;
+import mindustry.world.Edges;
+import mindustry.world.Tile;
+import shapez.content.item.ShapeItem;
 
-public class ShapeBlock extends Block {
+import static mindustry.Vars.world;
+
+public class ShapeBlock extends RectBlock {
     public int shapeCapacity = 1;
 
     public ShapeBlock(String name){
         super(name);
     }
 
-    public class ShapeBuild extends Building {
+    public class ShapeBuild extends RectBuild {
         public void handleShape(ShapeBuild source, ShapeItem item) {}
 
         public boolean acceptShape(ShapeBuild source, ShapeItem item) {
@@ -33,17 +46,6 @@ public class ShapeBlock extends Block {
                 }
             }
             this.handleShape(this, item);
-        }
-
-        public Building atSide(int r, int i) {
-            Point2 point = new Point2();
-            int cornerX = -(size-1)/2, cornerY = -(size-1)/2, s = size;
-            int rot = (rotation + r) % 4;
-            if (rot == 0) point.set(cornerX + s, cornerY + (size-1-i));
-            else if (rot == 1) point.set(cornerX + i, cornerY + s);
-            else if (rot == 2) point.set(cornerX - 1, cornerY + i);
-            else if (rot == 3) point.set(cornerX + (size-1-i), cornerY - 1);
-            return nearby(point.x, point.y);
         }
     }
 }

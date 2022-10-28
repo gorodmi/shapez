@@ -1,29 +1,31 @@
-package shapez.content.crafter;
+package shapez.content.block.crafter;
 
-import arc.math.geom.Point2;
 import arc.struct.Seq;
-import arc.util.Log;
 import mindustry.gen.Building;
-import shapez.ShapeItem;
+import shapez.content.item.quad.QuadItem;
+import shapez.content.item.ShapeItem;
 
 public class ShapeSplitter extends ShapeCrafter {
     public ShapeSplitter(String name) {
         super(name);
+        width = 1;
+        height = 2;
+        useRotationRegions = true;
     }
 
     public class ShapeSplitterBuild extends ShapeCrafterBuild {
-        ShapeItem input = null;
-        ShapeItem[] output = new ShapeItem[2];
+        QuadItem input = null;
+        QuadItem[] output = new QuadItem[2];
 
         @Override
         public boolean acceptShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0)) return input == null;
+            if (source == atSide(2, 0) && item instanceof QuadItem) return input == null;
             return false;
         }
 
         @Override
         public void handleShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0)) input = item;
+            if (source == atSide(2, 0) && item instanceof QuadItem) input = (QuadItem) item;
         }
 
         @Override
@@ -33,8 +35,8 @@ public class ShapeSplitter extends ShapeCrafter {
 
         @Override
         public void output() {
-            Building a = atSide(0, 1);
-            Building b = atSide(0, 0);
+            Building a = atSide(0, 0);
+            Building b = atSide(0, 1);
             if (a instanceof ShapeBuild && output[0] != null && ((ShapeBuild) a).acceptShape(this, output[0])) {
                 ((ShapeBuild) a).handleShape(this, output[0]);
                 output[0] = null;
@@ -47,7 +49,7 @@ public class ShapeSplitter extends ShapeCrafter {
 
         @Override
         public void craft() {
-            Seq<ShapeItem> shapes = input.split();
+            Seq<QuadItem> shapes = input.split();
             output[0] = shapes.get(0);
             output[1] = shapes.get(1);
             input = null;

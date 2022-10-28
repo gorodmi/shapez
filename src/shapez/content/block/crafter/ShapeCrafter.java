@@ -1,8 +1,8 @@
-package shapez.content.crafter;
+package shapez.content.block.crafter;
 
 import arc.struct.Seq;
-import shapez.ShapeItem;
-import shapez.content.ShapeBlock;
+import shapez.content.item.ShapeItem;
+import shapez.content.block.ShapeBlock;
 
 public class ShapeCrafter extends ShapeBlock {
     public ShapeCrafter(String name) {

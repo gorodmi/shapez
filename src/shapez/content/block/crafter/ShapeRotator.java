@@ -1,27 +1,29 @@
-package shapez.content.crafter;
+package shapez.content.block.crafter;
 
-import arc.util.Log;
 import mindustry.gen.Building;
-import shapez.ShapeItem;
+import shapez.content.item.quad.QuadItem;
+import shapez.content.item.ShapeItem;
 
 public class ShapeRotator extends ShapeCrafter {
     public ShapeRotator(String name) {
         super(name);
+        width = 1;
+        height = 1;
     }
 
     public class ShapeRotatorBuild extends ShapeCrafterBuild {
-        ShapeItem input = null;
-        ShapeItem output = null;
+        QuadItem input = null;
+        QuadItem output = null;
 
         @Override
         public boolean acceptShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0)) return input == null;
+            if (source == atSide(2, 0) && item instanceof QuadItem) return input == null;
             return false;
         }
 
         @Override
         public void handleShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0)) input = item;
+            if (source == atSide(2, 0) && item instanceof QuadItem) input = (QuadItem) item;
         }
 
         @Override
