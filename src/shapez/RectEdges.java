@@ -3,6 +3,7 @@ package shapez;
 import arc.math.Mathf;
 import arc.math.geom.Point2;
 import arc.struct.Seq;
+import arc.util.Tmp;
 import mindustry.gen.Building;
 import mindustry.world.Tile;
 import shapez.content.block.ShapeBlock;
@@ -25,11 +26,17 @@ public class RectEdges {
                 tiley + Mathf.clamp(other.y - tiley, -(height - 1) / 2, (height / 2)));
     }
 
-    public static Point2[] getEdges(int width, int height, int rot) {
+    public static Point2[] getEdges(int width, int height) {
         Seq<Point2> points = new Seq<>();
         for (int i = 0; i < width; i++) {
-            points.add(new Point2());
+            points.add(new Point2(-i, -1));
+            points.add(new Point2(-i, height));
         }
+        for (int i = 0; i < height; i++) {
+            points.add(new Point2(1, i));
+            points.add(new Point2(-width, i));
+        }
+        points.sort((a, b) -> Float.compare(Mathf.angle(a.x, a.y), Mathf.angle(b.x, b.y)));
         return points.toArray(Point2.class);
     }
 }

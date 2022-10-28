@@ -22,6 +22,8 @@ import mindustry.world.meta.*;
 import shapez.RectEdges;
 import shapez.content.item.ShapeItem;
 
+import java.util.Objects;
+
 import static mindustry.Vars.*;
 
 public class ShapeConveyor extends ShapeBlock implements Autotiler{
@@ -209,9 +211,12 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
             blending = bits[4];
 
             next = front();
-            last = back();
-            last = last == null ? left() : last;
-            last = last == null ? right() : last;
+            if (last == null || !last.isValid()) {
+                Seq<Building> buildings = Seq.with(back(), left(), right())
+                        .filter(b -> b != null && b.isValid())
+                        .removeAll(b -> b instanceof ShapeConveyorBuild && b.front() != this);
+                last = buildings.size == 0 ? null : buildings.get(0);
+            }
             nextc = next instanceof ShapeConveyorBuild && next.team == team ? (ShapeConveyorBuild)next : null;
             aligned = nextc != null && rotation == next.rotation;
         }
@@ -307,7 +312,7 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
         @Override
         public boolean acceptShape(ShapeBuild source, ShapeItem item){
             if(len >= capacity) return false;
-            return (last == source && minitem >= itemSpace && !(source.block.rotate && next == source));
+            return source == last && minitem >= itemSpace && !(source.block.rotate && next == source);
         }
 
         @Override

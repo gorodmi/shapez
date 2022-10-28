@@ -15,6 +15,9 @@ public class ShapeCreator extends ShapeBlock {
         saveConfig = true;
         noUpdateDisabled = true;
 
+        width = 1;
+        height = 1;
+
         config(String.class, (ShapeCreatorBuild tile, String code) -> {
             tile.code = code;
             tile.item = (QuadItem) ShapeItem.fromString("QuadItem", tile.code);

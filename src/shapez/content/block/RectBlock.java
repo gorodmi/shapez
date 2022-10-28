@@ -7,17 +7,17 @@ import arc.math.Mathf;
 import arc.math.geom.Point2;
 import arc.struct.Seq;
 import arc.util.Eachable;
+import arc.util.Log;
 import arc.util.Reflect;
 import arc.util.Tmp;
 import mindustry.entities.units.BuildPlan;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.world.Block;
-import mindustry.world.Edges;
 import mindustry.world.Tile;
+import shapez.RectEdges;
 
 import static mindustry.Vars.*;
-import static mindustry.Vars.player;
 
 public class RectBlock extends Block {
     public TextureRegion[] rotationRegions;
@@ -117,9 +117,9 @@ public class RectBlock extends Block {
             onProximityRemoved();
             tmpTiles.clear();
 
-            Point2[] nearby = Edges.getEdges(block.size);
+            Point2[] nearby = RectEdges.getEdges(((RectBlock) block).width, ((RectBlock) block).height);
             for(Point2 point : nearby){
-                Building other = world.build(tile.x + point.x, tile.y + point.y);
+                Building other = nearby(point.x, point.y);
                 //remove this tile from all nearby tile's proximities
                 if(other != null){
                     tmpTiles.add(other);
@@ -138,9 +138,11 @@ public class RectBlock extends Block {
             tmpTiles.clear();
             proximity.clear();
 
-            Point2[] nearby = Edges.getEdges(block.size);
+            Log.info("updating prox " + tile);
+
+            Point2[] nearby = RectEdges.getEdges(((RectBlock) block).width, ((RectBlock) block).height);
             for(Point2 point : nearby){
-                Building other = world.build(tile.x + point.x, tile.y + point.y);
+                Building other = nearby(point.x, point.y);
 
                 if(other == null || !(other.tile.interactable(team))) continue;
 
@@ -189,30 +191,14 @@ public class RectBlock extends Block {
         }
 
         public Building atSide(int side, int i) {
-            Point2 point = new Point2();
-            side = (rotation + side) % 4;
-            if (rotation == 0) {
-                if (side == 0) point.set(width, i);
-                else if (side == 1) point.set(width - i - 1, height);
-                else if (side == 2) point.set(-1, height - i - 1);
-                else if (side == 3) point.set(i, -1);
-            } else if (rotation == 1) {
-                if (side == 0) point.set(1, i);
-                else if (side == 1) point.set(-i, width);
-                else if (side == 2) point.set(-height, width - i - 1);
-                else if (side == 3) point.set(i - height + 1, -1);
-            } else if (rotation == 2) {
-                if (side == 0) point.set(1, i - height + 1);
-                else if (side == 1) point.set(-i, 1);
-                else if (side == 2) point.set(-width, -i);
-                else if (side == 3) point.set(width - i - 1, -height);
-            } else if (rotation == 3) {
-                if (side == 0) point.set(height, width - i - 1);
-                else if (side == 1) point.set(width - i - 1, 1);
-                else if (side == 2) point.set(-1, -i);
-                else if (side == 3) point.set(i, -width);
+            switch (side) {
+                case 0: Tmp.p1.set(width, i); break;
+                case 1: Tmp.p1.set(width - i - 1, height); break;
+                case 2: Tmp.p1.set(-1, height - i - 1); break;
+                case 3: Tmp.p1.set(i, -1); break;
             }
-            return nearby(point.x, point.y);
+            Tmp.p1.rotate(rotation);
+            return nearby(Tmp.p1.x, Tmp.p1.y);
         }
     }
 }

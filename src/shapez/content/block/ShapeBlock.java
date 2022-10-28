@@ -1,22 +1,6 @@
 package shapez.content.block;
 
-import arc.Core;
-import arc.graphics.g2d.Draw;
-import arc.math.Mathf;
-import arc.math.geom.Point2;
-import arc.math.geom.Vec2;
-import arc.struct.Seq;
-import arc.util.Log;
-import arc.util.Reflect;
-import arc.util.Tmp;
-import mindustry.game.Team;
-import mindustry.gen.Building;
-import mindustry.world.Block;
-import mindustry.world.Edges;
-import mindustry.world.Tile;
 import shapez.content.item.ShapeItem;
-
-import static mindustry.Vars.world;
 
 public class ShapeBlock extends RectBlock {
     public int shapeCapacity = 1;
