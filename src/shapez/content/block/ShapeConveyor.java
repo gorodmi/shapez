@@ -214,9 +214,11 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
             next = front();
             if (back() != null && !(back() instanceof ShapeConveyorBuild && back().front() != this))
                 last = back();
-            else if (left() != null && left().front() == this && (right() == null || right().front() != this))
+            else if (left() != null && !(left() instanceof ShapeConveyorBuild && left().front() != this) &&
+                    (right() == null || (right() instanceof ShapeConveyorBuild && right().front() != this)))
                 last = left();
-            else if ((left() == null || left().front() != this) && right() != null && right().front() == this)
+            else if ((left() == null || (left() instanceof ShapeConveyorBuild && left().front() != this))
+                    && right() != null && !(right() instanceof ShapeConveyorBuild && right().front() != this))
                 last = right();
             else last = null;
             nextc = next instanceof ShapeConveyorBuild && next.team == team ? (ShapeConveyorBuild)next : null;
