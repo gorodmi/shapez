@@ -122,7 +122,7 @@ public class RectBlock extends Block {
             onProximityRemoved();
             tmpTiles.clear();
 
-            Point2[] nearby = RectEdges.getEdges(((RectBlock) block).width, ((RectBlock) block).height);
+            Point2[] nearby = RectEdges.getEdges(((RectBlock) block).width, ((RectBlock) block).height, rotation);
             for(Point2 point : nearby){
                 Building other = nearby(point.x, point.y);
                 //remove this tile from all nearby tile's proximities
@@ -143,7 +143,7 @@ public class RectBlock extends Block {
             tmpTiles.clear();
             proximity.clear();
 
-            Point2[] nearby = RectEdges.getEdges(((RectBlock) block).width, ((RectBlock) block).height);
+            Point2[] nearby = RectEdges.getEdges(((RectBlock) block).width, ((RectBlock) block).height, rotation);
             for(Point2 point : nearby){
                 Building other = nearby(point.x, point.y);
 
