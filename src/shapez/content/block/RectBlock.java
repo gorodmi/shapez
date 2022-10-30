@@ -63,7 +63,7 @@ public class RectBlock extends Block {
             for (int i = 0; i < rotationRegions.length; i++) {
                 rotationRegions[i] = Core.atlas.find(name + "-rot-" + i);
             }
-            region = rotationRegions[0];
+            fullIcon = uiIcon = region = rotationRegions[0];
         }
     }
 
@@ -110,6 +110,11 @@ public class RectBlock extends Block {
                     Reflect.invoke(t, "changed");
                 });
             });
+        }
+
+        @Override
+        public boolean canPickup() {
+            return false;
         }
 
         @Override

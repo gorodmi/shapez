@@ -9,6 +9,7 @@ public class ShapeRotator extends ShapeCrafter {
         super(name);
         width = 1;
         height = 1;
+        useRotationRegions = true;
     }
 
     public class ShapeRotatorBuild extends ShapeCrafterBuild {

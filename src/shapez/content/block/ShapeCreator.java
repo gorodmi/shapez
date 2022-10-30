@@ -10,7 +10,6 @@ import shapez.content.item.quad.QuadItem;
 public class ShapeCreator extends ShapeBlock {
     public ShapeCreator(String name) {
         super(name);
-        update = true;
         configurable = true;
         saveConfig = true;
         noUpdateDisabled = true;

@@ -7,9 +7,6 @@ import shapez.content.block.ShapeBlock;
 public class ShapeCrafter extends ShapeBlock {
     public ShapeCrafter(String name) {
         super(name);
-        update = true;
-        rotate = true;
-        noUpdateDisabled = false;
     }
 
     public class ShapeCrafterBuild extends ShapeBuild {

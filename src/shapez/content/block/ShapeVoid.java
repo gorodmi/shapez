@@ -5,7 +5,9 @@ import shapez.content.item.ShapeItem;
 public class ShapeVoid extends ShapeBlock {
     public ShapeVoid(String name) {
         super(name);
-        update = true;
+        width = 1;
+        height = 1;
+        useRotationRegions = true;
     }
 
     public class ShapeVoidBuild extends ShapeBuild {

@@ -39,8 +39,6 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
 
     public ShapeConveyor(String name){
         super(name);
-        rotate = true;
-        update = true;
         group = BlockGroup.transportation;
         priority = TargetPriority.transport;
         conveyorPlacement = true;
@@ -50,6 +48,9 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
         ambientSoundVolume = 0.0022f;
         unloadable = false;
         noUpdateDisabled = false;
+
+        width = 1;
+        height = 1;
     }
 
     @Override
