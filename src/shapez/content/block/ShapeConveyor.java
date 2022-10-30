@@ -212,13 +212,13 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
             blending = bits[4];
 
             next = front();
-            if (last == null || !last.isValid()) {
-                Seq<Building> buildings = Seq.with(back(), left(), right())
-                        .filter(b -> b != null && b.isValid())
-                        .removeAll(b -> b instanceof ShapeConveyorBuild && b.front() != this);
-                last = buildings.find(b -> b instanceof ShapeConveyorBuild);
-                if (last == null) last = buildings.size == 0 ? null : buildings.get(0);
-            }
+            if (back() != null && !(back() instanceof ShapeConveyorBuild && back().front() != this))
+                last = back();
+            else if (left() != null && left().front() == this && (right() == null || right().front() != this))
+                last = left();
+            else if ((left() == null || left().front() != this) && right() != null && right().front() == this)
+                last = right();
+            else last = null;
             nextc = next instanceof ShapeConveyorBuild && next.team == team ? (ShapeConveyorBuild)next : null;
             aligned = nextc != null && rotation == next.rotation;
         }
@@ -320,24 +320,17 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
         @Override
         public void handleShape(ShapeBuild source, ShapeItem item){
             if(len >= capacity) return;
-
-            int r = rotation;
-            Tile facing = RectEdges.getFacingEdge(source.tile, tile);
-            int ang = ((facing.relativeTo(tile.x, tile.y) - r));
-            float x = (ang == -1 || ang == 3) ? 1 : (ang == 1 || ang == -3) ? -1 : 0;
-
             noSleep();
-
-            if(Math.abs(facing.relativeTo(tile.x, tile.y) - r) == 0){ //idx = 0
-                add(0);
-                xs[0] = x;
+            add(0);
+            float x = source == right() ? -1 : 1;
+            if (source == right() || source == left()) {
+                xs[mid] = x;
+                ys[mid] = 0.5F;
+                ids[mid] = item;
+            } else if (source == back()) {
+                xs[0] = 0;
                 ys[0] = 0;
                 ids[0] = item;
-            }else{ //idx = mid
-                add(mid);
-                xs[mid] = x;
-                ys[mid] = 0.5f;
-                ids[mid] = item;
             }
         }
 
