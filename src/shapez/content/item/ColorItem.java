@@ -49,4 +49,9 @@ public class ColorItem extends ShapeItem {
     public static ColorItem fromString(String str) {
         return new ColorItem(ShapeColor.fromString(str));
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof ColorItem && obj.toString().equals(toString());
+    }
 }
