@@ -5,6 +5,10 @@ import shapez.content.item.quad.QuadItem;
 
 public class ShapeItem {
     public void draw(float x, float y, float size) {
+        drawRaw(x, y, size);
+    }
+
+    public void drawRaw(float x, float y, float size) {
         Draw.rect("error", x, y, size, size);
     }
 

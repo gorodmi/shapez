@@ -1,10 +1,24 @@
 package shapez.content.item.quad;
 
+import arc.Core;
+import arc.graphics.Color;
+import arc.graphics.Pixmap;
+import arc.graphics.Texture;
+import arc.graphics.g2d.*;
+import arc.graphics.gl.FrameBuffer;
+import arc.struct.IntMap;
+import arc.struct.ObjectIntMap;
+import arc.struct.ObjectMap;
 import arc.struct.Seq;
+import arc.util.Log;
+import arc.util.Tmp;
+import mindustry.Vars;
+import org.w3c.dom.Text;
 import shapez.content.item.ColorItem;
 import shapez.content.item.ShapeItem;
 
 public class QuadItem extends ShapeItem {
+    private static final ObjectMap<String, Texture> cache = new ObjectMap<>();
     public final Seq<Layer> layers;
 
     public QuadItem() {
@@ -75,11 +89,25 @@ public class QuadItem extends ShapeItem {
         }
     }
 
-    public void draw(float x, float y, float size) {
+    public void cache() {
+        FrameBuffer buffer = new FrameBuffer(256, 256);
+        buffer.begin(Color.clear);
+        Draw.proj(0, 0, 256, -256);
+        drawRaw(128f, -128f, 241);
+        buffer.end();
+        cache.put(toString(), buffer.getTexture());
+    }
+
+    public void drawRaw(float x, float y, float size) {
         for (int i = 0; i < layers.size; i++) {
-            float qSize = size - (i * size / 5f + 1);
+            float qSize = size - (i * size / 4f + 1);
             layers.get(i).draw(x, y, qSize, size);
         }
+    }
+
+    public void draw(float x, float y, float size) {
+        if (!cache.containsKey(toString())) cache();
+        Draw.rect(Draw.wrap(cache.get(toString())), x, y, size, size);
     }
 
     public boolean empty() {
