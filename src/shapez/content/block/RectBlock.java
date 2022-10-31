@@ -5,6 +5,7 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.math.geom.Point2;
+import arc.math.geom.Vec2;
 import arc.struct.Seq;
 import arc.util.Eachable;
 import arc.util.Log;
@@ -112,12 +113,9 @@ public class RectBlock extends Block {
             });
         }
 
-        public float centerX() {
-            return x + ((width - 1) * tilesize / 2f);
-        }
-
-        public float centerY() {
-            return y + ((height - 1) * tilesize / 2f);
+        public Vec2 center() {
+            return Tmp.v1.set(((height - 1) * tilesize / 2f), ((width - 1) * tilesize / 2f))
+                    .rotate(rotation * 90).add(x, y).cpy();
         }
 
         @Override

@@ -3,6 +3,7 @@ package shapez.content.block;
 import arc.graphics.Color;
 import arc.graphics.g2d.Font;
 import arc.graphics.g2d.GlyphLayout;
+import arc.math.geom.Vec2;
 import arc.struct.Seq;
 import arc.util.pooling.Pools;
 import mindustry.Vars;
@@ -56,9 +57,10 @@ public class ShapeStorage extends ShapeBalancer {
         public void draw() {
             super.draw();
             if (balance == null) return;
-            balance.draw(centerX(), centerY(), Math.min(width, height) * Vars.tilesize / 2f);
+            Vec2 center = center();
+            balance.draw(center.x, center.y, Math.min(width, height) * Vars.tilesize / 2f);
             Font font = Fonts.outline;
-            font.draw(String.valueOf(amount), centerX() + Vars.tilesize / 1.5f, centerY() - Vars.tilesize / 3f, Color.white, Math.min(width, height) / 1.5f / Vars.tilesize, false, 0);
+            font.draw(String.valueOf(amount), center.x + Vars.tilesize / 1.5f, center.y - Vars.tilesize / 3f, Color.white, Math.min(width, height) / 1.5f / Vars.tilesize, false, 0);
         }
     }
 }
