@@ -74,7 +74,7 @@ public class RectBlock extends Block {
 
     @Override
     public void drawDefaultPlanRegion(BuildPlan plan, Eachable<BuildPlan> list) {
-        Tmp.v1.set(-(width - 1) / 2f, (height - 1) / 2f)
+        Tmp.v1.set((width - 1) / 2f, (height - 1) / 2f)
                 .rotate(plan.rotation * 90).scl(tilesize).add(plan.drawx(), plan.drawy());
         float x = Tmp.v1.x;
         float y = Tmp.v1.y;
@@ -110,6 +110,14 @@ public class RectBlock extends Block {
                     Reflect.invoke(t, "changed");
                 });
             });
+        }
+
+        public float centerX() {
+            return x + ((width - 1) * tilesize / 2f);
+        }
+
+        public float centerY() {
+            return y + ((height - 1) * tilesize / 2f);
         }
 
         @Override
@@ -178,7 +186,7 @@ public class RectBlock extends Block {
 
         @Override
         public void draw() {
-            Tmp.v1.set(-(width - 1) / 2f, (height - 1) / 2f).rotate(drawrot()).scl(tilesize).add(x, y);
+            Tmp.v1.set((width - 1) / 2f, (height - 1) / 2f).rotate(drawrot()).scl(tilesize).add(x, y);
             float x = Tmp.v1.x;
             float y = Tmp.v1.y;
 

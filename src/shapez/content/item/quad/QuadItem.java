@@ -136,4 +136,9 @@ public class QuadItem extends ShapeItem {
         }
         return out;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof QuadItem && obj.toString().equals(this.toString());
+    }
 }

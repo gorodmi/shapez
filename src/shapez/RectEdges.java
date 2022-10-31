@@ -33,8 +33,8 @@ public class RectEdges {
             points.add(new Point2(-i, height).rotate(rot));
         }
         for (int i = 0; i < height; i++) {
-            points.add(new Point2(1, i).rotate(rot));
-            points.add(new Point2(-width, i).rotate(rot));
+            points.add(new Point2(-1, i).rotate(rot));
+            points.add(new Point2(width, i).rotate(rot));
         }
         points.sort((a, b) -> Float.compare(Mathf.angle(a.x, a.y), Mathf.angle(b.x, b.y)));
         return points.toArray(Point2.class);

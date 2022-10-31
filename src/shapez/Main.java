@@ -16,6 +16,7 @@ public class Main extends Mod{
 
     public static ShapeConveyor shapeConveyor;
     public static ShapeBalancer shapeBalancer;
+    public static ShapeStorage shapeStorage;
     public static ShapeCreator shapeCreator;
     public static ShapeVoid shapeVoid;
     public static ShapeSplitter shapeSplitter;
@@ -42,6 +43,10 @@ public class Main extends Mod{
         }};
 
         shapeBalancer = new ShapeBalancer("shape-balancer"){{
+            requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+        }};
+
+        shapeStorage = new ShapeStorage("shape-storage"){{
             requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
         }};
 
