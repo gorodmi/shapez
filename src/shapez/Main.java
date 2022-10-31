@@ -15,6 +15,7 @@ public class Main extends Mod{
     public static final Color outline = Color.valueOf("555555");
 
     public static ShapeConveyor shapeConveyor;
+    public static ShapeBalancer shapeBalancer;
     public static ShapeCreator shapeCreator;
     public static ShapeVoid shapeVoid;
     public static ShapeSplitter shapeSplitter;
@@ -37,6 +38,10 @@ public class Main extends Mod{
             for (int i = 0; i < regions.length; i++)
                 for (int j = 0; j < regions[i].length; j++)
                     regions[i][j] = Core.atlas.find("error");
+            requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+        }};
+
+        shapeBalancer = new ShapeBalancer("shape-balancer"){{
             requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
         }};
 
