@@ -9,11 +9,13 @@ import mindustry.type.*;
 import shapez.content.block.*;
 import shapez.content.block.crafter.*;
 import shapez.content.item.ColorItem;
+import shapez.content.item.MindustryItem;
 import shapez.content.item.quad.QuadItem;
 
 public class Main extends Mod{
     public static final Color outline = Color.valueOf("555555");
 
+    public static MindustryItem circle, square;
     public static ShapeConveyor shapeConveyor;
     public static ShapeBalancer shapeBalancer;
     public static ShapeStorage shapeStorage;
@@ -27,59 +29,58 @@ public class Main extends Mod{
     public static ShapeExtractor shapeExtractor;
     public static ShapeOre circleOre, squareOre, starOre, windmillOre, redOre, greenOre, blueOre;
 
-    public Main() {
-
-    }
-
     @Override
     public void loadContent(){
+        circle = new MindustryItem(QuadItem.fromString("CuCuCuCu"));
+        square = new MindustryItem(QuadItem.fromString("RuRuRuRu"));
+
         shapeConveyor = new ShapeConveyor("shape-conveyor"){{
             speed = 0.03f;
             regions = new TextureRegion[4][5];
             for (int i = 0; i < regions.length; i++)
                 for (int j = 0; j < regions[i].length; j++)
                     regions[i][j] = Core.atlas.find("error");
-            requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+            requirements(Category.distribution, new ItemStack[0], true);
         }};
 
         shapeBalancer = new ShapeBalancer("shape-balancer"){{
-            requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+            requirements(Category.distribution, new ItemStack[0], true);
         }};
 
         shapeStorage = new ShapeStorage("shape-storage"){{
-            requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+            requirements(Category.distribution, new ItemStack[0], true);
         }};
 
         shapeCreator = new ShapeCreator("shape-creator"){{
-            requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+            requirements(Category.distribution, new ItemStack[0], true);
         }};
 
         shapeVoid = new ShapeVoid("shape-void"){{
-            requirements(Category.distribution, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+            requirements(Category.distribution, new ItemStack[0], true);
         }};
 
         shapeSplitter = new ShapeSplitter("shape-splitter"){{
-            requirements(Category.crafting, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+            requirements(Category.crafting, new ItemStack[0], true);
         }};
 
         shapeStacker = new ShapeStacker("shape-stacker"){{
-            requirements(Category.crafting, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+            requirements(Category.crafting, new ItemStack[0], true);
         }};
 
         shapeRotator = new ShapeRotator("shape-rotator"){{
-            requirements(Category.crafting, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+            requirements(Category.crafting, new ItemStack[0], true);
         }};
 
         shapePainter = new ShapePainter("shape-painter"){{
-            requirements(Category.crafting, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+            requirements(Category.crafting, new ItemStack[0], true);
         }};
 
         colorMixer = new ColorMixer("color-mixer"){{
-            requirements(Category.crafting, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+            requirements(Category.crafting, new ItemStack[0], true);
         }};
 
         shapeExtractor = new ShapeExtractor("shape-extractor"){{
-            requirements(Category.production, new ItemStack[]{new ItemStack(Items.coal, 1)}, true);
+            requirements(Category.production, new ItemStack[0], true);
         }};
 
         circleOre = new ShapeOre(QuadItem.fromString("CuCuCuCu"));
@@ -87,6 +88,7 @@ public class Main extends Mod{
         // TODO: make not full
         starOre = new ShapeOre(QuadItem.fromString("SuSuSuSu"));
         windmillOre = new ShapeOre(QuadItem.fromString("WuWuWuWu"));
+
         redOre = new ShapeOre(ColorItem.fromString("r"));
         greenOre = new ShapeOre(ColorItem.fromString("g"));
         blueOre = new ShapeOre(ColorItem.fromString("b"));
