@@ -9,7 +9,6 @@ public class ShapeBlock extends RectBlock {
     public ShapeBlock(String name){
         super(name);
         buildCost = 0;
-        CustomRulesDialog
     }
 
     public class ShapeBuild extends RectBuild {
