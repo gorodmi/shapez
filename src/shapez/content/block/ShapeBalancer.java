@@ -39,5 +39,10 @@ public class ShapeBalancer extends ShapeBlock {
             balance = null;
             side = (side + 1) % buildings.size;
         }
+
+        @Override
+        public boolean isOutput(ShapeBuild source) {
+            return source == atSide(0, 0) || source == atSide(0, 1);
+        }
     }
 }

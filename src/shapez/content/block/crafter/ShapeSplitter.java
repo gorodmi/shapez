@@ -54,5 +54,10 @@ public class ShapeSplitter extends ShapeCrafter {
             output[1] = shapes.get(1);
             input = null;
         }
+
+        @Override
+        public boolean isOutput(ShapeBuild source) {
+            return source == atSide(0, 0) || source == atSide(0, 1);
+        }
     }
 }

@@ -212,15 +212,12 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
             blending = bits[4];
 
             next = front();
-            if (back() != null && !(back() instanceof ShapeConveyorBuild && back().front() != this))
-                last = back();
-            else if (left() != null && !(left() instanceof ShapeConveyorBuild && left().front() != this) &&
-                    (right() == null || (right() instanceof ShapeConveyorBuild && right().front() != this)))
-                last = left();
-            else if ((left() == null || (left() instanceof ShapeConveyorBuild && left().front() != this))
-                    && right() != null && !(right() instanceof ShapeConveyorBuild && right().front() != this))
-                last = right();
-            else last = null;
+            boolean connectBack = back() instanceof ShapeBuild && ((ShapeBuild) back()).isOutput(this);
+            boolean connectLeft = left() instanceof ShapeBuild && ((ShapeBuild) left()).isOutput(this);
+            boolean connectRight = right() instanceof ShapeBuild && ((ShapeBuild) right()).isOutput(this);
+            if (connectBack) last = back();
+            else if (connectLeft && !connectRight) last = left();
+            else if (!connectLeft && connectRight) last = right();
             nextc = next instanceof ShapeConveyorBuild && next.team == team ? (ShapeConveyorBuild)next : null;
             aligned = nextc != null && rotation == next.rotation;
         }
@@ -334,6 +331,11 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
                 ys[0] = 0;
                 ids[0] = item;
             }
+        }
+
+        @Override
+        public boolean isOutput(ShapeBuild source) {
+            return atSide(0, 0) == source;
         }
 
         @Override

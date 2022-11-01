@@ -21,5 +21,10 @@ public class ShapeExtractor extends ShapeBlock {
             if (front instanceof ShapeBlock.ShapeBuild && ((ShapeBlock.ShapeBuild) front).acceptShape(this, ore.item))
                 ((ShapeBlock.ShapeBuild) front).handleShape(this, ore.item);
         }
+
+        @Override
+        public boolean isOutput(ShapeBuild source) {
+            return source == atSide(0, 0);
+        }
     }
 }

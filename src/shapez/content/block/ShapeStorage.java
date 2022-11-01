@@ -62,5 +62,10 @@ public class ShapeStorage extends ShapeBalancer {
             Font font = Fonts.outline;
             font.draw(String.valueOf(amount), center.x + Vars.tilesize / 1.5f, center.y - Vars.tilesize / 3f, Color.white, Math.min(width, height) / 1.5f / Vars.tilesize, false, 0);
         }
+
+        @Override
+        public boolean isOutput(ShapeBuild source) {
+            return source == atSide(0, 0) || source == atSide(0, 1);
+        }
     }
 }

@@ -62,5 +62,10 @@ public class ShapeCreator extends ShapeBlock {
             super.read(read, revision);
             configure(read.str());
         }
+
+        @Override
+        public boolean isOutput(ShapeBuild source) {
+            return true;
+        }
     }
 }

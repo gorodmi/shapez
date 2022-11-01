@@ -45,6 +45,11 @@ public class ColorMixer extends ShapeCrafter {
         }
 
         @Override
+        public boolean isOutput(ShapeBuild source) {
+            return source == atSide(0, 1);
+        }
+
+        @Override
         public void craft() {
             output = input[0].mix(input[1]);
             input[0] = input[1] = null;

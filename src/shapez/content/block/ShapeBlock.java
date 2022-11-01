@@ -31,5 +31,9 @@ public class ShapeBlock extends RectBlock {
             }
             this.handleShape(this, item);
         }
+
+        public boolean isOutput(ShapeBuild source) {
+            return false;
+        }
     }
 }

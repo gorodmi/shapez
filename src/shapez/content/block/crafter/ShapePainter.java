@@ -52,5 +52,10 @@ public class ShapePainter extends ShapeCrafter {
             color = null;
             input = null;
         }
+
+        @Override
+        public boolean isOutput(ShapeBuild source) {
+            return source == atSide(0, 0);
+        }
     }
 }

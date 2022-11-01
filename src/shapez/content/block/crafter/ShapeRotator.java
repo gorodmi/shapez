@@ -47,5 +47,10 @@ public class ShapeRotator extends ShapeCrafter {
             output = input.rotate(true);
             input = null;
         }
+
+        @Override
+        public boolean isOutput(ShapeBuild source) {
+            return source == atSide(0, 0);
+        }
     }
 }

@@ -72,6 +72,11 @@ public class ShapeCrafter extends ShapeBlock {
             resultCopy.each(this::offloadShape);
         }
 
+        @Override
+        public boolean isOutput(ShapeBuild source) {
+            return true;
+        }
+
         public void craft() {
 
         }
