@@ -3,6 +3,7 @@ package shapez;
 import arc.*;
 import arc.graphics.Color;
 import arc.graphics.g2d.*;
+import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.mod.*;
 import mindustry.type.*;
@@ -35,12 +36,9 @@ public class Main extends Mod{
         square = new MindustryItem(QuadItem.fromString("RuRuRuRu"));
 
         shapeConveyor = new ShapeConveyor("shape-conveyor"){{
-            speed = 0.03f;
-            regions = new TextureRegion[4][5];
-            for (int i = 0; i < regions.length; i++)
-                for (int j = 0; j < regions[i].length; j++)
-                    regions[i][j] = Core.atlas.find("error");
             requirements(Category.distribution, new ItemStack[0], true);
+            speed = 0.03f;
+            displayedSpeed = 4.2f;
         }};
 
         shapeBalancer = new ShapeBalancer("shape-balancer"){{

@@ -1,5 +1,6 @@
 package shapez.content.block;
 
+import arc.Core;
 import arc.func.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
@@ -51,6 +52,16 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
 
         width = 1;
         height = 1;
+    }
+
+    @Override
+    public void load() {
+        super.load();
+        regions = new TextureRegion[2][4];
+        for (int i = 0; i < regions.length; i++)
+            for (int j = 0; j < regions[i].length; j++)
+                regions[i][j] = Core.atlas.find(name + "-" + i + "-" + j);
+        region = fullIcon = uiIcon = regions[0][0];
     }
 
     @Override
@@ -166,7 +177,7 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
                 Tmp.v1.trns(rotation * 90, tilesize, 0);
                 Tmp.v2.trns(rotation * 90, -tilesize / 2f, xs[i] * tilesize / 2f);
 
-                item.draw(x + Tmp.v1.x * ys[i] + Tmp.v2.x, y + Tmp.v1.y * ys[i] + Tmp.v2.y, 6f);
+                item.draw(x + Tmp.v1.x * ys[i] + Tmp.v2.x, y + Tmp.v1.y * ys[i] + Tmp.v2.y, 5f);
             }
         }
 
@@ -205,13 +216,8 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
         public void onProximityUpdate(){
             super.onProximityUpdate();
 
-            int[] bits = buildBlending(tile, rotation, null, true);
-            blendbits = bits[0];
-            blendsclx = bits[1];
-            blendscly = bits[2];
-            blending = bits[4];
-
             next = front();
+            last = null;
             boolean connectBack = back() instanceof ShapeBuild && ((ShapeBuild) back()).isOutput(this);
             boolean connectLeft = left() instanceof ShapeBuild && ((ShapeBuild) left()).isOutput(this);
             boolean connectRight = right() instanceof ShapeBuild && ((ShapeBuild) right()).isOutput(this);
@@ -220,6 +226,12 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
             else if (!connectLeft && connectRight) last = right();
             nextc = next instanceof ShapeConveyorBuild && next.team == team ? (ShapeConveyorBuild)next : null;
             aligned = nextc != null && rotation == next.rotation;
+
+            int[] bits = buildBlending(tile, rotation, null, true);
+            blendbits = last == null || last == back() ? 0 : 1;
+            blendsclx = 1;
+            blendscly = last == null || (last.rotation + 1) % 4 == rotation ? 1 : -1;
+            blending = bits[4];
         }
 
         @Override
