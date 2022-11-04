@@ -31,6 +31,7 @@ public class ShapeBridge extends ShapeBlock {
                     return (ShapeBridgeBuild) build;
                 }
             }
+            isOutput = false;
             return null;
         }
 
