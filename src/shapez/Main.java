@@ -19,6 +19,7 @@ public class Main extends Mod{
     public static MindustryItem circle, square;
     public static ShapeConveyor shapeConveyor;
     public static ShapeBalancer shapeBalancer;
+    public static ShapeBridge shapeBridge;
     public static ShapeStorage shapeStorage;
     public static ShapeCreator shapeCreator;
     public static ShapeVoid shapeVoid;
@@ -42,6 +43,10 @@ public class Main extends Mod{
         }};
 
         shapeBalancer = new ShapeBalancer("shape-balancer"){{
+            requirements(Category.distribution, new ItemStack[0], true);
+        }};
+
+        shapeBridge = new ShapeBridge("shape-bridge"){{
             requirements(Category.distribution, new ItemStack[0], true);
         }};
 
