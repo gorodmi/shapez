@@ -35,8 +35,8 @@ public class ColorItem extends ShapeItem {
                     (k == other.color && v.contains(color))) return new ColorItem(k);
         }
         Seq<ShapeColor> keys = secondary.keys().toSeq();
-        if ((keys.contains(color) && primary.contains(other.color)) || (keys.contains(other.color) && primary.contains(color)))
-            return new ColorItem(ShapeColor.white);
+        if ((keys.contains(color) && primary.contains(other.color)) || (keys.contains(other.color) && primary.contains(color)) ||
+                (color == ShapeColor.white || other.color == ShapeColor.white)) return new ColorItem(ShapeColor.white);
         return null;
     }
 
