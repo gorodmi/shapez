@@ -106,6 +106,7 @@ public class RectBlock extends Block {
             Core.app.post(() -> {
                 multi = getMulti(tile, rotation);
                 multi.each(t -> {
+                    if (t == null) return;
                     t.build = this;
                     Reflect.set(t, "block", block);
                     Reflect.invoke(t, "changed");
