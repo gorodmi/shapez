@@ -17,14 +17,14 @@ public class ShapeRotator extends ShapeCrafter {
         QuadItem output = null;
 
         @Override
-        public boolean acceptShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0) && item instanceof QuadItem) return input == null;
+        public boolean acceptShape(ShapeBuild source, ShapeItem item, int side, int i) {
+            if (side == 2 && i == 0 && item instanceof QuadItem) return input == null;
             return false;
         }
 
         @Override
-        public void handleShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0) && item instanceof QuadItem) input = (QuadItem) item;
+        public void handleShape(ShapeBuild source, ShapeItem item, int side, int i) {
+            if (side == 2 && i == 0 && item instanceof QuadItem) input = (QuadItem) item;
         }
 
         @Override
@@ -35,11 +35,7 @@ public class ShapeRotator extends ShapeCrafter {
         @Override
         public void output() {
             if (output == null) return;
-            Building a = atSide(0, 0);
-            if (a instanceof ShapeBuild && ((ShapeBuild) a).acceptShape(this, output)) {
-                ((ShapeBuild) a).handleShape(this, output);
-                output = null;
-            }
+            if (outputShape(output, 0, 0)) output = null;
         }
 
         @Override

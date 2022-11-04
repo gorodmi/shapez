@@ -19,16 +19,16 @@ public class ShapePainter extends ShapeCrafter {
         QuadItem output = null;
 
         @Override
-        public boolean acceptShape(ShapeBlock.ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0) && item instanceof QuadItem) return input == null;
-            if (source == atSide(1, 0) && item instanceof ColorItem) return color == null;
+        public boolean acceptShape(ShapeBlock.ShapeBuild source, ShapeItem item, int side, int i) {
+            if (side == 2 && i == 0 && item instanceof QuadItem) return input == null;
+            if (side == 1 && i == 0 && item instanceof ColorItem) return color == null;
             return false;
         }
 
         @Override
-        public void handleShape(ShapeBlock.ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0) && item instanceof QuadItem) input = (QuadItem) item;
-            if (source == atSide(1, 0) && item instanceof ColorItem) color = (ColorItem) item;
+        public void handleShape(ShapeBlock.ShapeBuild source, ShapeItem item, int side, int i) {
+            if (side == 2 && i == 0 && item instanceof QuadItem) input = (QuadItem) item;
+            if (side == 1 && i == 0 && item instanceof ColorItem) color = (ColorItem) item;
         }
 
         @Override
@@ -39,11 +39,7 @@ public class ShapePainter extends ShapeCrafter {
         @Override
         public void output() {
             if (output == null) return;
-            Building a = atSide(0, 0);
-            if (a instanceof ShapeBlock.ShapeBuild && ((ShapeBlock.ShapeBuild) a).acceptShape(this, output)) {
-                ((ShapeBlock.ShapeBuild) a).handleShape(this, output);
-                output = null;
-            }
+            if (outputShape(output, 0, 0)) output = null;
         }
 
         @Override

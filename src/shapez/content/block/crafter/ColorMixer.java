@@ -17,16 +17,16 @@ public class ColorMixer extends ShapeCrafter {
         ColorItem output = null;
 
         @Override
-        public boolean acceptShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0) && item instanceof ColorItem) return input[0] == null;
-            if (source == atSide(2, 1) && item instanceof ColorItem) return input[1] == null;
+        public boolean acceptShape(ShapeBuild source, ShapeItem item, int side, int i) {
+            if (side == 2 && i == 0 && item instanceof ColorItem) return input[0] == null;
+            if (side == 2 && i == 1 && item instanceof ColorItem) return input[1] == null;
             return false;
         }
 
         @Override
-        public void handleShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0) && item instanceof ColorItem) input[0] = (ColorItem) item;
-            if (source == atSide(2, 1) && item instanceof ColorItem) input[1] = (ColorItem) item;
+        public void handleShape(ShapeBuild source, ShapeItem item, int side, int i) {
+            if (side == 2 && i == 0 && item instanceof ColorItem) input[0] = (ColorItem) item;
+            if (side == 2 && i == 1 && item instanceof ColorItem) input[1] = (ColorItem) item;
         }
 
         @Override
@@ -37,11 +37,7 @@ public class ColorMixer extends ShapeCrafter {
         @Override
         public void output() {
             if (output == null) return;
-            Building a = atSide(0, 1);
-            if (a instanceof ShapeBuild && ((ShapeBuild) a).acceptShape(this, output)) {
-                ((ShapeBuild) a).handleShape(this, output);
-                output = null;
-            }
+            if (outputShape(output, 0, 1)) output = null;
         }
 
         @Override

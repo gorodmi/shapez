@@ -28,7 +28,7 @@ import java.util.Objects;
 import static mindustry.Vars.*;
 
 public class ShapeConveyor extends ShapeBlock implements Autotiler{
-    private static final float itemSpace = 1f;
+    private static final float itemSpace = 0.5f;
     private static final int capacity = 1;
 
     public TextureRegion[][] regions;
@@ -308,13 +308,7 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
         }
 
         public boolean pass(ShapeItem item){
-            if (!(next instanceof ShapeBuild)) return false;
-            ShapeBuild sBuild = (ShapeBuild) next;
-            if(item != null && sBuild.team == team && sBuild.acceptShape(this, item)){
-                sBuild.handleShape(this, item);
-                return true;
-            }
-            return false;
+            return item != null && next != null && next.team == team && outputShape(next, item);
         }
 
         @Override
@@ -323,22 +317,23 @@ public class ShapeConveyor extends ShapeBlock implements Autotiler{
         }
 
         @Override
-        public boolean acceptShape(ShapeBuild source, ShapeItem item){
+        public boolean acceptShape(ShapeBuild source, ShapeItem item, int side, int i){
             if(len >= capacity) return false;
             return source == last && minitem >= itemSpace && !(source.block.rotate && next == source);
         }
 
         @Override
-        public void handleShape(ShapeBuild source, ShapeItem item){
+        public void handleShape(ShapeBuild source, ShapeItem item, int side, int i){
             if(len >= capacity) return;
             noSleep();
-            add(0);
             float x = source == right() ? -1 : 1;
             if (source == right() || source == left()) {
+                add(mid);
                 xs[mid] = x;
                 ys[mid] = 0.5F;
                 ids[mid] = item;
             } else if (source == back()) {
+                add(0);
                 xs[0] = 0;
                 ys[0] = 0;
                 ids[0] = item;

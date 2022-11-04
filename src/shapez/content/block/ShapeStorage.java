@@ -24,14 +24,14 @@ public class ShapeStorage extends ShapeBalancer {
         int amount = 0;
 
         @Override
-        public boolean acceptShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0) || source == atSide(2, 1))
+        public boolean acceptShape(ShapeBuild source, ShapeItem item, int side, int i) {
+            if (side == 2)
                 return balance == null || (balance.equals(item) && amount < shapeCapacity);
             return false;
         }
 
         @Override
-        public void handleShape(ShapeBuild source, ShapeItem item) {
+        public void handleShape(ShapeBuild source, ShapeItem item, int side, int i) {
             if (balance == null) {
                 balance = item;
                 amount = 1;
@@ -39,18 +39,9 @@ public class ShapeStorage extends ShapeBalancer {
         }
 
         @Override
-        public void updateTile() {
-            if (balance == null) return;
-            Building a = atSide(0, 0);
-            Building b = atSide(0, 1);
-            Seq<Building> buildings = Seq.with(a, b).select(build -> build instanceof ShapeBuild && ((ShapeBuild) build).acceptShape(this, balance));
-            if (buildings.size == 0) return;
-            side %= buildings.size;
-            Building next = buildings.get(side);
-            ((ShapeBuild) next).handleShape(this, balance);
+        public void remove() {
             amount--;
             if (amount <= 0) balance = null;
-            side = (side + 1) % buildings.size;
         }
 
         @Override

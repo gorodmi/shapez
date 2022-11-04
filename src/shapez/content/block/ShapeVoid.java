@@ -12,12 +12,12 @@ public class ShapeVoid extends ShapeBlock {
 
     public class ShapeVoidBuild extends ShapeBuild {
         @Override
-        public boolean acceptShape(ShapeBuild source, ShapeItem item) {
+        public boolean acceptShape(ShapeBuild source, ShapeItem item, int side, int i) {
             return true;
         }
 
         @Override
-        public void handleShape(ShapeBuild source, ShapeItem item) {
+        public void handleShape(ShapeBuild source, ShapeItem item, int side, int i) {
 
         }
     }

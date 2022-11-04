@@ -17,9 +17,7 @@ public class ShapeExtractor extends ShapeBlock {
             Floor floor = tile.overlay();
             if (!(floor instanceof ShapeOre)) return;
             ShapeOre ore = (ShapeOre) floor;
-            Building front = atSide(0, 0);
-            if (front instanceof ShapeBlock.ShapeBuild && ((ShapeBlock.ShapeBuild) front).acceptShape(this, ore.item))
-                ((ShapeBlock.ShapeBuild) front).handleShape(this, ore.item);
+            outputShape(ore.item, 0, 0);
         }
 
         @Override

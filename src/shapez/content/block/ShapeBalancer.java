@@ -16,13 +16,13 @@ public class ShapeBalancer extends ShapeBlock {
         ShapeItem balance = null;
 
         @Override
-        public boolean acceptShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0) || source == atSide(2, 1)) return balance == null;
+        public boolean acceptShape(ShapeBuild source, ShapeItem item, int side, int i) {
+            if (side == 2) return balance == null;
             return false;
         }
 
         @Override
-        public void handleShape(ShapeBuild source, ShapeItem item) {
+        public void handleShape(ShapeBuild source, ShapeItem item, int side, int i) {
             balance = item;
         }
 
@@ -31,13 +31,18 @@ public class ShapeBalancer extends ShapeBlock {
             if (balance == null) return;
             Building a = atSide(0, 0);
             Building b = atSide(0, 1);
-            Seq<Building> buildings = Seq.with(a, b).select(build -> build instanceof ShapeBuild && ((ShapeBuild) build).acceptShape(this, balance));
+            Seq<Building> buildings = Seq.with(a, b).select(build -> build instanceof ShapeBuild);
             if (buildings.size == 0) return;
             side %= buildings.size;
             Building next = buildings.get(side);
-            ((ShapeBuild) next).handleShape(this, balance);
-            balance = null;
+            if (!(outputShape(next, balance) ||
+                  buildings.size == 2 && outputShape(buildings.get(1 - side), balance))) return;
+            remove();
             side = (side + 1) % buildings.size;
+        }
+
+        public void remove() {
+            balance = null;
         }
 
         @Override

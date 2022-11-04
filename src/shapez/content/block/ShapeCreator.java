@@ -33,15 +33,15 @@ public class ShapeCreator extends ShapeBlock {
 
         @Override
         public void updateTile() {
-            if (item != null) offloadShape(item);
-            else if (ColorItem.validCode(code)) offloadShape(ColorItem.fromString(code));
+            if (item != null) outputShape(item, 0, 0);
+            else if (ColorItem.validCode(code)) outputShape(ColorItem.fromString(code), 0, 0);
             noSleep();
         }
 
         @Override
         public void buildConfiguration(Table table){
             Table t = new Table().top();
-            t.field(code, this::configure).width(90f).expandX().growX();
+            t.field(code, this::configure).width(180f).expandX().growX();
             table.top().add(t);
         }
 
@@ -65,7 +65,7 @@ public class ShapeCreator extends ShapeBlock {
 
         @Override
         public boolean isOutput(ShapeBuild source) {
-            return true;
+            return source == atSide(0, 0);
         }
     }
 }

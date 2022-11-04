@@ -18,14 +18,14 @@ public class ShapeSplitter extends ShapeCrafter {
         QuadItem[] output = new QuadItem[2];
 
         @Override
-        public boolean acceptShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0) && item instanceof QuadItem) return input == null;
+        public boolean acceptShape(ShapeBuild source, ShapeItem item, int side, int i) {
+            if (side == 2 && i == 0 && item instanceof QuadItem) return input == null;
             return false;
         }
 
         @Override
-        public void handleShape(ShapeBuild source, ShapeItem item) {
-            if (source == atSide(2, 0) && item instanceof QuadItem) input = (QuadItem) item;
+        public void handleShape(ShapeBuild source, ShapeItem item, int side, int i) {
+            if (side == 2 && i == 0 && item instanceof QuadItem) input = (QuadItem) item;
         }
 
         @Override
@@ -35,16 +35,8 @@ public class ShapeSplitter extends ShapeCrafter {
 
         @Override
         public void output() {
-            Building a = atSide(0, 0);
-            Building b = atSide(0, 1);
-            if (a instanceof ShapeBuild && output[0] != null && ((ShapeBuild) a).acceptShape(this, output[0])) {
-                ((ShapeBuild) a).handleShape(this, output[0]);
-                output[0] = null;
-            }
-            if (b instanceof ShapeBuild && output[1] != null && ((ShapeBuild) b).acceptShape(this, output[1])) {
-                ((ShapeBuild) b).handleShape(this, output[1]);
-                output[1] = null;
-            }
+            if (output[0] != null && outputShape(output[0], 0, 0)) output[0] = null;
+            if (output[1] != null && outputShape(output[1], 0, 1)) output[1] = null;
         }
 
         @Override
